@@ -3,6 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        maven { url 'https://maven.aliyun.com/repository/public' }//阿里云的jcenter镜像
     }
 }
 dependencyResolutionManagement {
