@@ -3,6 +3,16 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+subprojects {
+    apply plugin: 'android-aspectjx'
+
+//    aspectjx {
+//        enabled true
+//        exclude 'androidx', 'com.google', 'com.squareup', 'com.alipay', 'com.taobao', 'org.apache',
+//                'kotlinx', 'org.jetbrains', "module-info", 'versions.9', "com.lodz.android.pandora"
+//    }
+}
+
 android {
     compileSdk 32
 
@@ -17,6 +27,13 @@ android {
     viewBinding {
         enabled = true
     }
+
+    // 程序在编译的时候会检查lint，有任何错误提示会停止build，我们可以关闭这个开关
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
 
     buildTypes {
         release {
@@ -35,4 +52,5 @@ android {
 
 dependencies {
     implementation 'ink.lodz:pandora:1.8.7'
+    implementation 'org.aspectj:aspectjrt:1.9.7'
 }
