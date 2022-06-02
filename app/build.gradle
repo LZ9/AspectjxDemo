@@ -2,16 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 }
-
-subprojects {
-    apply plugin: 'android-aspectjx'
-
-//    aspectjx {
-//        enabled true
-//        exclude 'androidx', 'com.google', 'com.squareup', 'com.alipay', 'com.taobao', 'org.apache',
-//                'kotlinx', 'org.jetbrains', "module-info", 'versions.9', "com.lodz.android.pandora"
-//    }
-}
+apply plugin: 'android-aspectjx'
 
 android {
     compileSdk 32
@@ -48,6 +39,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+}
+
+aspectjx {
+    enabled true
+    exclude 'androidx', 'com.google', 'com.squareup', 'com.alipay', 'com.taobao', 'org.apache',
+            'kotlinx', 'org.jetbrains', "module-info", 'versions.9', "com.lodz.android.pandora"
 }
 
 dependencies {
