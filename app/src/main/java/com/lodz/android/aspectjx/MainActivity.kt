@@ -2,7 +2,9 @@ package com.lodz.android.aspectjx
 
 import android.os.Bundle
 import android.view.View
+import com.lodz.android.aspectjx.aop.checklogin.AopAttentionActivity
 import com.lodz.android.aspectjx.aop.checklogin.LoginHelper
+import com.lodz.android.aspectjx.aop.checklogin.aspect.CheckLogin
 import com.lodz.android.aspectjx.aop.fastclick.FastClickLimit
 import com.lodz.android.aspectjx.databinding.ActivityMainBinding
 import com.lodz.android.corekt.anko.append
@@ -31,32 +33,32 @@ class MainActivity : BaseActivity() {
         super.setListeners()
 
         mBinding.loginProxyBtn.setOnClickListener {
-//            goAttentionActivity()
+            goAttentionActivity()
         }
 
         mBinding.cleanBtn.setOnClickListener {
             mBinding.logTv.text = ""
+            LoginHelper.isLogin = false
+            showLoginStatus()
         }
 
         mBinding.fastClickAnnotationBtn.setOnClickListener @FastClickLimit(2000) {
             addLog(DateUtils.getCurrentFormatString(DateUtils.TYPE_10).append("：FastClick Annotation"))
         }
 
-        mBinding.fastClickObjectBtn.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                addLog(DateUtils.getCurrentFormatString(DateUtils.TYPE_10).append("：FastClick Object"))
-            }
-        })
+        mBinding.fastClickObjectBtn.setOnClickListener {
+            addLog(DateUtils.getCurrentFormatString(DateUtils.TYPE_10).append("：FastClick Object"))
+        }
 
         mBinding.fastClickLambdaBtn.setOnClickListener {
             addLog(DateUtils.getCurrentFormatString(DateUtils.TYPE_10).append("：FastClick Lambda"))
         }
     }
 
-//    @CheckLogin
-//    private fun goAttentionActivity() {
-//        AopAttentionActivity.start(getContext())
-//    }
+    @CheckLogin
+    private fun goAttentionActivity() {
+        AopAttentionActivity.start(getContext())
+    }
 
     override fun initData() {
         super.initData()
@@ -65,7 +67,7 @@ class MainActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        mBinding.loginStatusTv.text = getString(R.string.aop_login_status).append(LoginHelper.isLogin)
+        showLoginStatus()
     }
 
     private fun addLog(log: String) {
@@ -73,5 +75,9 @@ class MainActivity : BaseActivity() {
             return
         }
         mBinding.logTv.text = log.append("\n").append(mBinding.logTv.text)
+    }
+
+    private fun showLoginStatus(){
+        mBinding.loginStatusTv.text = getString(R.string.aop_login_status).append(LoginHelper.isLogin)
     }
 }
