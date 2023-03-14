@@ -2,7 +2,9 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 }
-apply plugin: 'android-aspectjx'
+//apply plugin: 'android-aspectjx' // 支持7.1.3
+apply plugin: 'io.github.wurensen.android-aspectjx'
+
 
 android {
     compileSdk 33
@@ -20,11 +22,6 @@ android {
     }
 
     // 程序在编译的时候会检查lint，有任何错误提示会停止build，我们可以关闭这个开关
-    lintOptions {
-        abortOnError false
-        checkReleaseBuilds false
-    }
-
 
     buildTypes {
         release {
@@ -39,6 +36,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+    namespace 'com.lodz.android.aspectjx'
 }
 
 aspectjx {
